@@ -59,9 +59,12 @@ a {
   z-index: 100;
 }
 /* more-icon */
+.more-icon{
+  float: left;
+  display: block;
+}
 .more-icon .iconfont .icon-caidan{
   display: block;
-   /* background: url('./more.png'); */
   background-size: cover;
 }
 .icon-caidan{
@@ -77,8 +80,9 @@ a {
 /* logo */
 .logo-icon{
   float: left;
-  display: inline-block;
+  display: block;
   width: 71%;
+  text-align: center;
 }
 .logo-icon .iconfont .icon-chuizi{
   height: 100%;
@@ -93,11 +97,12 @@ a {
   line-height: 50px;
   /* text-indent: -1000px; */
   padding-right: 10px;
+  text-align: center;
 }
 /* search */
 .search-icon{
   float: left;
-  display: inline-block;
+  display: block;
   line-height: 50px;
 }
 .search-icon .iconfont .icon-sousuo{
