@@ -3,7 +3,12 @@
   <div class="search-from">
     <div class="moudle-from">
       <div class="from-item">
-        <input type="text" class="input-box" @focus="showMask" @blur="hide" placeholder="请输入要搜索的内容">
+        <input type="text" 
+        class="input-box" 
+        placeholder="请输入要搜索的内容" 
+        @focus="showShadow"
+        @blur="hideShadow"
+        >
         <i class="iconfont icon-sousuo"></i>
       </div>
       <div class="cancel-btn">
@@ -12,25 +17,27 @@
         </router-link>
       </div>
     </div>
-    <transition name="fade">
-      <div class="mask" v-show="show" ></div>
+    <transition>
+        <div v-show="detailShow" class="detail" >
+          <!-- <div class="detail-hide" @click="hideShow"></div> -->
+        </div>
     </transition>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      show:false
+      detailShow: false
     }
   },
   methods: {
-    showMask(){
-      this.show = true
+    showShadow () {
+      this.detailShow = true
     },
-    hide(){
-      this.show = false
+    hideShadow () {
+      this.detailShow = false
     }
   }
 }
@@ -71,19 +78,16 @@ export default {
         line-height 31px
         overflow hidden
         position relative
-        // 
         .input-box
           box-sizing border-box
           border-radius 16.7px
           display inline-block
-          // border-radius 16.67px
           height 31px
           line-height 31px
           width 100%
           background #ffffff
           font-size 14.5px
           padding-left 31px
-          // padding-right 13.5px
         .icon-sousuo
           text-align center
           background-size 14.6px 14.6px
@@ -116,14 +120,14 @@ export default {
             margin-left 15px
             text-align center
             color #626262
-  .mask
-    position fixed
-    top 50px
-    left 0
-    bottom 0
-    right 0
-    width 100%
-    height 100%
-    overflow auto
-    background rgba(0,0,0,.7)
+    .detail
+      position: fixed
+      z-index: 100
+      top: 50px
+      left: 0
+      bottom 0
+      width: 100%
+      height: 100%
+      overflow: auto
+      background-color rgba(0,0,0,.8)
 </style>
