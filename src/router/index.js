@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Header from '@/components/header'
-import HelloWorld from '@/components/HelloWorld'
 import Classify from '@/components/classify'
+import Search from '@/components/search'
 
 Vue.use(Router)
 
@@ -18,6 +18,11 @@ export default new Router({
       path: '/classify',
       name: 'Classify',
       component: Classify
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
     }
   ]
 })
