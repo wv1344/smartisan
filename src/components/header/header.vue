@@ -7,9 +7,11 @@
       <div class="logo-icon">
         <i class="iconfont icon-chuizi" title="锤子商城"></i>
       </div>
-      <div class="search-icon">
-        <i  class="iconfont icon-sousuo" title="搜索"></i>
-      </div>   
+      <router-link to="/search">
+        <div class="search-icon">
+          <i  class="iconfont icon-sousuo" title="搜索"></i>
+        </div>   
+      </router-link>
   </div>
   <transition name='fade'>
     <div class="switch" v-show="show">
