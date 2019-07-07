@@ -14,7 +14,14 @@
       </router-link>
   </div>
   <transition name='fade'>
-    <div class="switch" v-show="show">
+    <div class="switch" v-show="show" @click="hide">
+      <router-link to="">
+        <div class="one">
+          <i class="iconfont icon-gouwu1"></i>
+          <span class="text">锤子商城</span>
+        </div>
+      </router-link>
+
       <div class="one">
         <i class="iconfont icon-gouwu1"></i>
         <span class="text">锤子商城</span>
@@ -59,10 +66,7 @@
         <i class="iconfont icon-gouwu1"></i>
         <span class="text">锤子商城</span>
       </div>
-      <div class="one">
-        <i class="iconfont icon-gouwu1"></i>
-        <span class="text">锤子商城</span>
-      </div>
+
     </div>
   </transition>
 </div>
@@ -81,10 +85,12 @@ export default {
     showSwitch(){
       if(this.show === false){
         this.show = true
-     }else{
-       this.show = false
-     }
-        
+      }else{
+        this.show = false
+      }  
+    },
+    hide(){
+      this.show = false
     }
   },
 
@@ -171,6 +177,7 @@ export default {
     transform translateY(-1000px)
 
   .one
+    z-index 333
     box-sizing border-box
     display inline-block
     width 25%

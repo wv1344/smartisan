@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <!-- <i-tabbar class="tabbarWrapper"></i-tabbar> -->
   </div>
 </template>
 

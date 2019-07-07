@@ -7,12 +7,12 @@
 
 <script>
 import Header from '@/components/header/header'
-import tabbar from '@/components/tabbar/tabbar'
+import Tabbar from '@/components/tabbar/tabbar'
 export default {
 
 components: {
   'i-header': Header,
-  "i-tabbar": tabbar
+  "i-tabbar": Tabbar
 }
 }
 </script>

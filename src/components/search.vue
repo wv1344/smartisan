@@ -3,7 +3,7 @@
   <div class="search-from">
     <div class="moudle-from">
       <div class="from-item">
-        <input type="text" class="input-box" placeholder="请输入要搜索的内容">
+        <input type="text" class="input-box" @focus="showMask" @blur="hide" placeholder="请输入要搜索的内容">
         <i class="iconfont icon-sousuo"></i>
       </div>
       <div class="cancel-btn">
@@ -12,12 +12,27 @@
         </router-link>
       </div>
     </div>
+    <transition name="fade">
+      <div class="mask" v-show="show" ></div>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-
+  data(){
+    return {
+      show:false
+    }
+  },
+  methods: {
+    showMask(){
+      this.show = true
+    },
+    hide(){
+      this.show = false
+    }
+  }
 }
 </script>
 
@@ -101,4 +116,14 @@ export default {
             margin-left 15px
             text-align center
             color #626262
+  .mask
+    position fixed
+    top 50px
+    left 0
+    bottom 0
+    right 0
+    width 100%
+    height 100%
+    overflow auto
+    background rgba(0,0,0,.7)
 </style>
