@@ -4,9 +4,12 @@
       <div class="more-icon" @click="showSwitch">
         <i class="iconfont icon-caidan" title="菜单"></i>
       </div>
-      <div class="logo-icon">
+      <div class="logo-icon" >
         <i class="iconfont icon-chuizi" title="锤子商城"></i>
       </div>
+      <!-- <div v-else>
+        <span>分类</span>
+      </div> -->
       <router-link to="/search">
         <div class="search-icon">
           <i  class="iconfont icon-sousuo" title="搜索"></i>
@@ -76,6 +79,9 @@
 
 export default {
   name: 'Header',
+  props: [
+    second
+  ],
   data(){
     return {
       show:false
