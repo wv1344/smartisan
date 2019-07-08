@@ -1,4 +1,5 @@
 <template>
+<div class="a">
   <!-- 搜索页头部 -->
   <div class="search-from">
     <div class="moudle-from">
@@ -23,6 +24,14 @@
         </div>
     </transition>
   </div>
+  <!-- 热门搜索 -->
+  <div class="hot-list">
+    <h4>热门搜索</h4>
+    <ul>
+      <li class="color-1">T恤</li>
+    </ul>
+  </div>
+</div>
 </template>
 
 <script>
@@ -44,6 +53,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  .a 
+    width 100%
+    height 100%
+
   input 
     border none 
     &:focus
@@ -54,7 +67,7 @@ export default {
       outline none
   .search-from
     box-sizing border-box
-    positon fixed
+    position fixed
     top 0
     left 0
     right 0
@@ -130,4 +143,32 @@ export default {
       height: 100%
       overflow: auto
       background-color rgba(0,0,0,.8)
+  .hot-list
+    position absolute
+    top 50px
+    left 0
+    bottom 0
+    right 0
+    background #EDEDED
+    // width 100%
+    // height 120px
+    display block
+    padding 0 20.8px
+    h4 
+      font-size 16px
+      display block
+      padding 19px 0 12px 5.6px
+      color #8e8e8e
+    ul
+      list-style none
+      .color-1
+        display inline-block
+        border 1px solid #d7d7d7
+        border-radius 15px 
+        background-color #FFE7E5
+        color #DC7069
+        font-size 14px
+        font-weight 700
+        padding 5px 15px
+
 </style>
