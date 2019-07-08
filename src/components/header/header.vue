@@ -4,12 +4,12 @@
       <div class="more-icon" @click="showSwitch">
         <i class="iconfont icon-caidan" title="菜单"></i>
       </div>
-      <div class="logo-icon" >
+      <div class="logo-icon" v-if="second">
         <i class="iconfont icon-chuizi" title="锤子商城"></i>
       </div>
-      <!-- <div v-else>
-        <span>分类</span>
-      </div> -->
+      <div v-else class="logo-icon">
+        <span class="Ftitle">分类</span>
+      </div>
       <router-link to="/search">
         <div class="search-icon">
           <i  class="iconfont icon-sousuo" title="搜索"></i>
@@ -79,9 +79,13 @@
 
 export default {
   name: 'Header',
-  props: [
-    second
-  ],
+  props: {
+    "second":{
+      type:Boolean,
+      default:true
+    }
+    
+  },
   data(){
     return {
       show:false
@@ -148,7 +152,10 @@ export default {
       background-color rgba(0, 0, 0, 0)
       font-size 25px
       text-align center
-
+  .Ftitle 
+      font-size 18px
+      font-weight 600
+      color #ffffff
   .search-icon
     display inline-block
     width 15%

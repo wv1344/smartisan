@@ -1,6 +1,6 @@
 <template>
   <div class="classify">
-    <i-header></i-header>
+    <i-header :second="false"></i-header>
      <i-tabbar></i-tabbar>
   </div>
  
