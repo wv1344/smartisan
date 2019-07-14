@@ -76,7 +76,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Header',
   props: {
@@ -88,7 +87,8 @@ export default {
   },
   data(){
     return {
-      show:false
+      show:false,
+      bannerUrl:[]
     }
   },
   methods: {
@@ -121,6 +121,7 @@ export default {
   background-size auto
   display block
   position fixed
+  z-index 50
   height 50px
   top 0
   left 0

@@ -1,24 +1,16 @@
 <template>
   <div class="home">
-    <i-header></i-header>
+    <i-header class="head"></i-header>
     <div class="content">
-      <swiper :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
+      <swiper class="banner" :options="swiperOption" ref="mySwiper" @someSwiperEvent="callback">
         <!-- slides -->
-        <swiper-slide class="slide slide1">
-            <img src="https://resource.smartisan.com/resource/h/h51008420.png" alt="">
+        <swiper-slide class="slide slide1" v-for="(item,index) in bannerList" :key="index">
+            <img :src="item.src" alt="">
         </swiper-slide>
-        <swiper-slide class="slide slide2">
-          <img src="https://resource.smartisan.com/resource/a/app10084201.png" alt="">
-        </swiper-slide>
-        <swiper-slide class="slide slide3">
-          <img src="https://resource.smartisan.com/resource/fda5c3e61a71c0f883bbd6c76516cd85.png" alt="">
-        </swiper-slide>
-        <swiper-slide class="slide slide4">
-          <img src="https://resource.smartisan.com/resource/a/app1008420.png" alt="">
-        </swiper-slide>
-        <!-- Optional controls -->
         <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
+      <i-hotgoods class="hot-goods"></i-hotgoods>
+      <i-clothBag class="cloth-bag"></i-clothBag>
     </div>
     <i-tabbar></i-tabbar>
   </div>
@@ -27,6 +19,9 @@
 <script>
 import Header from "@/components/header/header";
 import Tabbar from "@/components/tabbar/tabbar";
+import hotGoods from "@/components/hotGoods/hotGoods";
+import clothBag from "@/components/cloth_bag/cloth-bag";
+import api from '../api/index'
 export default {
   data() {
     return {
@@ -36,50 +31,53 @@ export default {
         },
         autoplay:true,
         loop : true,
-        slidesPerView : 1.1,
+        slidesPerView :1.1,
+        loopedSlides:document.querySelectorAll('.swiper-slide').length,
         spaceBetween : 20,
-        loopedSlides: 4,
         centeredSlides:true,
-        bulletClass : 'my-bullett',
-        bulletActiveClass: 'my-bullett-active',
-      }
+        
+      },
+      bannerList:[],
     };
   },
   components: {
     "i-header": Header,
-    "i-tabbar": Tabbar
-  }
+    "i-tabbar": Tabbar,
+    "i-hotgoods": hotGoods,
+    "i-clothBag": clothBag
+  },
+  methods: {
+    callback(){}
+  },
+  created() {
+    api.Banner().then(res => {
+      this.bannerList = res.data
+    })
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
-
 .home 
   margin: 0;
   padding: 0;
   .content
     position relative
     top 50px
-    .slide
-      height 100%
-      margin-top 10px
-      border-radius 10px
-    .slide1
-      img 
-        width 100%
+    padding-bottom 54px
+    .banner
+      margin-bottom 20px
+      .slide
         height 100%
-    .slide2
-      img 
-        width 100%
-        height 100%
-    .slide3
-      img 
-        width 100%
-        height 100%   
-    .slide4
-      img 
-        width 100%
-        height 100%  
+        margin-top 10px
+        border-radius 10px
+        img 
+          width 100%
+          height 100%
+    .hot-goods
+      border-top 7px solid #E4E4E4
+    .cloth-bag
+      border-top 7px solid #E4E4E4
   .content >>>.swiper-pagination-bullet 
     width 6px
     height 6px
