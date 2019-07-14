@@ -33,5 +33,8 @@ export default {
     },
     getClothBag(){
       return fetchGet('/clothbag')
+    },
+    getBreath(){
+      return fetchGet('/breath')
     }
 }

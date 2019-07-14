@@ -7,7 +7,7 @@
     <swiper class="goods" :options="swiperOption" ref="mySwiper" >
       <!-- slides -->
       <swiper-slide class="slide" v-for="(item,index) in goodList" :key="index">
-        <i-goodblock :item=item></i-goodblock>
+        <i-goodblock :iitem=item ></i-goodblock>
         <!-- <div class="img">
           <img :src="item.shop_info.ali_image" alt="">
         </div>
@@ -48,7 +48,7 @@ export default {
   created() {
     api.getHotGoods().then(res => {
       this.goodList = res.data
-      console.log(this.goodList)
+      // console.log(this.goodList)
     })
   },
 };

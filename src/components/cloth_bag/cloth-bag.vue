@@ -45,7 +45,6 @@ export default {
           if (item) {
           newArr.push(item)
         }})
-        console.log(newArr)
         return newArr[0]
       }
     }
@@ -56,7 +55,6 @@ export default {
   },
   created () {
     api.getClothBag().then((res) => {
-      // console.log(res.data)
       this.clothbag = res.data
     })
   }
