@@ -50,6 +50,7 @@ export default {
     display flex
     left 0
     right 0
+    background #fff
 
     .bar
       text-decoration none

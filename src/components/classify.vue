@@ -1,7 +1,10 @@
 <template>
   <div class="classify">
     <i-header :second="false"></i-header>
-     <i-tabbar></i-tabbar>
+      <div class="content">
+        
+      </div>
+    <i-tabbar></i-tabbar>
   </div>
  
 </template>

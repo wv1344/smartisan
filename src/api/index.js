@@ -36,5 +36,11 @@ export default {
     },
     getBreath(){
       return fetchGet('/breath')
+    },
+    getFittings(){
+      return fetchGet('/fittings')
+    },
+    getNutsparts(){
+      return fetchGet('/nutsparts')
     }
 }

@@ -12,6 +12,8 @@
       <i-hotgoods class="hot-goods"></i-hotgoods>
       <i-clothBag class="cloth-bag"></i-clothBag>
       <i-breath class="breath"></i-breath>
+      <i-fittings class="fittings"></i-fittings>
+      <i-nutsparts class="nutsparts"></i-nutsparts>
     </div>
     <i-tabbar></i-tabbar>
   </div>
@@ -23,6 +25,8 @@ import Tabbar from "@/components/tabbar/tabbar";
 import hotGoods from "@/components/hotGoods/hotGoods";
 import clothBag from "@/components/cloth_bag/cloth-bag";
 import Breath from "@/components/breath/breath";
+import Fittings from "@/components/fittings/fittings";
+import Nutsparts from "@/components/nuts-parts/nutsparts";
 import api from '../api/index'
 export default {
   data() {
@@ -48,6 +52,8 @@ export default {
     "i-hotgoods": hotGoods,
     "i-clothBag": clothBag,
     "i-breath": Breath,
+    "i-fittings": Fittings,
+    "i-nutsparts": Nutsparts,
   },
   methods: {
     callback(){}
@@ -83,6 +89,10 @@ export default {
       border-top 7px solid #E4E4E4
     .breath
       border-top 7px solid #E4E4E4
+    .fittings
+      border-top 7px solid #E4E4E4 
+    .nutsparts 
+      border-top 7px solid #E4E4E4       
   .content >>>.swiper-pagination-bullet 
     width 6px
     height 6px
