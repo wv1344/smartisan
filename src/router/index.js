@@ -5,6 +5,7 @@ import Classify from '@/components/classify'
 import Cart from '@/components/cart'
 import User from '@/components/user'
 import Search from '@/components/search/search'
+import Detail from '@/components/detail/detail'
 
 Vue.use(Router)
 
@@ -37,5 +38,10 @@ export default new Router({
       name: 'User',
       component: User
     },
+    {
+      path:'/detail/:id',
+      name:'Detail',
+      component:Detail
+    }
   ]
 })

@@ -5,7 +5,7 @@
       <i class="iconfont icon-tubiaozhizuo-"></i>
     </div>
     <ul class="box">
-      <li class="item" v-for="(item,index) in dataList" :key="index">
+      <li class="item" v-for="(item,index) in dataList" :key="index" @click="showDetail(item.id)">
         <i-goodblock :iitem=item :typee="large"></i-goodblock>
       </li>
     </ul>
@@ -20,6 +20,14 @@ export default {
     return {
       dataList:[],
       large:'large'
+    }
+  },
+  methods: {
+    showDetail(id){
+      // console.log(id)
+      this.$router.push({
+          path: `/detail/${id}`,        
+      })
     }
   },
   created() {

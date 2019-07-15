@@ -27,7 +27,7 @@
 <script>
 import api from '../../api/index'
 import Price from '../price/price'
-import goodBlock from '../goodblock/goodblock'
+import goodBlock from '../goodBlock/goodblock'
 export default {
   data(){
     return {

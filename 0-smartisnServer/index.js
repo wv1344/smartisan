@@ -24,7 +24,7 @@ const getUrl = function (){
       }
       let Url = ''
       Url = JSON.parse(res.text).uri
-      console.log(Url)
+      // console.log(Url)
       resolve(Url)
     })
   })
@@ -139,6 +139,16 @@ const getNutsparts = function(url){
   })
 }
 
+const getDetail = function(id){
+  return new Promise((resolve,reject) => {
+    superagent.get(`https://shopapi.smartisan.com/product/skus?ids=${id}&with_stock=true&with_spu=true`).end((err,res) => {
+      let tt = JSON.parse(res.text)
+      // console.log(tt)
+      resolve(tt.data.list)
+    })
+  })
+}
+
 app.get('/banner', (req, res) => {
   getUrl().then((url)=>{getBanner(url).then((sd) => {res.send(sd)})
   })
@@ -162,6 +172,11 @@ app.get('/fittings',(req,res) => {
 
 app.get('/nutsparts',(req,res) => {
   getUrl().then((url) => {getNutsparts(url).then((sd) =>{ res.send(sd)})})
+})
+
+app.get('/detail',(req,res) => {
+  // console.log(req.query.id)
+  getDetail(req.query.id).then((sd) => {res.send(sd)})
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

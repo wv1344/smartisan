@@ -8,10 +8,12 @@ axios.defaults.timeout = 10000
 axios.defaults.baseURL = 'http://localhost:3000'
 
 
-export function fetchGet(url, param) {
+export function fetchGet(url, id) {
   return new Promise((resolve, reject) => {
     axios.get(url, {
-      params: param
+      params: {
+        'id':id
+      }
     })
     .then(response => {
       resolve(response)
@@ -42,5 +44,8 @@ export default {
     },
     getNutsparts(){
       return fetchGet('/nutsparts')
+    },
+    getDetail(id){
+      return fetchGet('/detail',id)
     }
 }
