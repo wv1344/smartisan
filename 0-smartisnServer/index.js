@@ -96,7 +96,7 @@ const getBreath = function(url){
       let id = idd.join(',')
       superagent.get(`https://shopapi.smartisan.com/product/skus?ids=${id}&with_stock=true&with_spu=true`).end((err,res) => {
         let tt = JSON.parse(res.text)
-        // console.log(tt)
+        // console.log(res)
         resolve(tt.data.list)
       })
     })
@@ -149,6 +149,21 @@ const getDetail = function(id){
   })
 }
 
+const getReconment = function(){
+  let now = new Date().getTime()
+  return new Promise((resolve,reject) => {
+    superagent.get(`https://www.smartisan.com/www_json/DefaultRecmdSku.json?_v=${now}`).end((err,res) => {
+      let recommentList = res.text
+      // console.log(recommentList)
+      let id = JSON.parse(recommentList).join(',')
+      superagent.get(`https://shopapi.smartisan.com/product/skus?ids=${id}&with_stock=true&with_spu=true`).end((err,res)=> {
+        let da = JSON.parse(res.text)
+        resolve(da.data.list)
+      })
+    })
+  })
+}
+
 app.get('/banner', (req, res) => {
   getUrl().then((url)=>{getBanner(url).then((sd) => {res.send(sd)})
   })
@@ -177,6 +192,10 @@ app.get('/nutsparts',(req,res) => {
 app.get('/detail',(req,res) => {
   // console.log(req.query.id)
   getDetail(req.query.id).then((sd) => {res.send(sd)})
+})
+
+app.get('/recomment',(req,res)=> {
+  getReconment().then((rec) => {res.send(rec)})
 })
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

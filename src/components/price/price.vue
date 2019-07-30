@@ -1,7 +1,7 @@
 <template>
   <div class="price">
     <i class="iconfont icon-renminbi"></i>
-    <span class="money">{{price}}.00</span>
+    <span class="money">{{price}}</span>
   </div>
 </template>
 

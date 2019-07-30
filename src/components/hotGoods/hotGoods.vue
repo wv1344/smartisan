@@ -6,7 +6,7 @@
     </div>
     <swiper class="goods" :options="swiperOption" ref="mySwiper" >
       <!-- slides -->
-      <swiper-slide class="slide" v-for="(item,index) in goodList" :key="index">
+      <swiper-slide class="slide" v-for="(item,index) in goodList" :key="index" @click="showDetail(item.id)">
         <i-goodblock :iitem=item ></i-goodblock>
         <!-- <div class="img">
           <img :src="item.shop_info.ali_image" alt="">
@@ -39,6 +39,14 @@ export default {
         slidesPerView :2.6,
       },
       goodList:[]
+    }
+  },
+  methods: {
+    showDetail(id){
+      // console.log(id)
+      this.$router.push({
+          path: `/detail/${id}`,        
+      })
     }
   },
   components: {

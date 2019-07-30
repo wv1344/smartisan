@@ -101,6 +101,6 @@ export default {
   .content >>>.swiper-pagination-bullet-active
     width 6px
     height 6px
-    opacity .2
+    opacity 1
     background-color #fff
 </style>

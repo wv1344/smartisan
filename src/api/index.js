@@ -47,5 +47,8 @@ export default {
     },
     getDetail(id){
       return fetchGet('/detail',id)
+    },
+    getRecomment(){
+      return fetchGet('/recomment')
     }
 }

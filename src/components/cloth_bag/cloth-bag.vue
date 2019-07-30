@@ -4,7 +4,7 @@
       <h2 class="title">服饰箱包</h2>
       <i class="iconfont icon-tubiaozhizuo-"></i>
     </div>
-    <div class="item" v-for="(item,index) in clothbag" :key="index">
+    <div class="item" v-for="(item,index) in clothbag" :key="index" @click="showDetail(item.id)">
       <div class="left">
         <img class="image" :src="item.shop_info.ali_image">
       </div>
@@ -30,6 +30,14 @@ export default {
   data(){
     return{
       clothbag:[]
+    }
+  },
+  methods:{
+    showDetail(id){
+      // console.log(id)
+      this.$router.push({
+          path: `/detail/${id}`,        
+      })
     }
   },
   computed: {

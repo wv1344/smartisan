@@ -1,21 +1,122 @@
 <template>
   <div class="detail">
-    <swiper class="banner" :options="swiperOption" ref="mySwiper">
+    <div class="header">
+      <div class="title">
+        <span class="back" @click="goBack">
+          <i class="iconfont icon-zuo"></i>
+          返回
+          </span>
+        <h3>{{dataList.shop_info.title}}</h3>
+      </div>
+      <div class="switch">
+        <ul class="box-border">
+          <li class="box-line" style="border-right:1px solid #d5d5d5;">商品</li>
+          <li class="box-line" style="border-right:1px solid #d5d5d5;">详情</li>
+          <li class="box-line" style="border-right:1px solid #d5d5d5;">参数</li>
+          <li class="box-line">推荐</li>
+        </ul>
+      </div>
+    </div>
+    <div class="good">
+      <swiper class="banner" :options="swiperOption" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide class="slide slide1" v-for="(item,index) in dataList.shop_info.ali_images" :key="index">
-        <img :src="item" alt="">
-      </swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
-    </swiper>
+        <swiper-slide class="slide slide1" v-for="(item,index) in bannerImg" :key="index">
+          <img :src="item" alt="">
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+      <div class="title-content">
+        <h4>{{dataList.spu.sku_info[0].title}}</h4>
+        <p>{{dataList.spu.sku_info[0].sub_title}}</p>
+        <i-price class="title-price" :price="Number(dataList.spu.sku_info[0].price)"></i-price>
+      </div>
+      <div class="item-box">
+        <div class="left">
+          <h6>已选版本</h6>
+          <p>
+            <span class="name">颜色：</span>
+            <span class="value">藏蓝色</span>
+          </p>
+          <p>
+            <span class="name">尺码：</span>
+            <span class="value">37</span>
+          </p>
+          <p>
+            <span class="name">数量：</span>
+            <span class="value">1</span>
+          </p>
+        </div>
+        <div class="right">
+          <i class="iconfont icon-tubiaozhizuo-"></i>
+        </div>
+      </div>
+      <div class="item-detail">
+        <div class="item-title">
+          <h2>商品详情</h2>
+        </div>
+        <div class="item-img">
+          <img :src=longImg alt="">
+        </div>
+      </div>
+      <div class="item-specs">
+        <div class="item-title">
+          <h2>技术参数</h2>
+        </div>
+        <div class="specs">
+          <ul>
+            <li class="specs-item" v-for="(iitem,index) in specsData" :key="index">
+              <h4>{{iitem.name}}</h4>
+              <span>{{iitem.value}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="item-server">
+        <div class="item-title">
+          <h2>服务说明</h2>
+        </div>
+        <div class="con">
+          lasdjf
+        </div>
+      </div>  
+      <div class="recommend">
+        <div class="item-title">
+          <h2>相关推荐</h2>
+        </div>
+        <ul class="box">
+          <li class="item" v-for="(item,index) in recommentData" :key="index">
+            <i-goodblock :iitem=item :typee="large"></i-goodblock>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">
+      <ul>
+        <li class="cart">
+          <i class="iconfont icon-gouwu1"></i>          
+        </li>
+        <li class="add-cart">
+          <button class="addCart">加入购物车</button>
+        </li>
+        <li class="buy">
+          <button class="buyNow">现在购买</button>
+        </li>
+      </ul>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import api from '../../api/index'
+import Price from '@/components/price/price'
+import goodBlock from '../goodBlock/goodblock'
+
 export default {
   data(){
     return {
       id:this.$route.params.id,
+      large:'large',
       dataList:null,
       swiperOption: {
         pagination: {
@@ -28,23 +129,312 @@ export default {
         spaceBetween : 20,
         centeredSlides:true,
       },
+      recommentData:null
+    }
+  },
+  methods:{
+    goBack(){
+      this.$router.go(-1);//返回上一层
+    }
+  },
+  components:{
+    "i-price":Price,
+    "i-goodblock":goodBlock
+
+  },
+  computed:{
+    specsData(){
+      return this.dataList.shop_info.tpl_content.base.attributes[0].list
+    },
+    bannerImg(){
+      return this.dataList.shop_info.ali_images
+    },
+    longImg(){
+      return this.dataList.shop_info.tpl_content.base.images.ali_mobile.url[0]
+    },
+    bigTitle(){
+      return 
     }
   },
   created() {
     console.log(this.id)
     api.getDetail(this.id).then((res) => {
       this.dataList = res.data[0]
-    } )
+      console.log(this.dataList)
+    })
+    api.getRecomment().then((res) => {
+      let reco = res.data.map((item) => {
+        if(item.sale_status === 3){
+          return item
+        }
+      })
+      let reco2 = []
+      reco.forEach(item => {
+        if(item){
+          reco2.push(item)
+        }
+      });
+      console.log(reco2)
+      this.recommentData = reco2
+    })
   },
 }
 </script>
 
 <style lang="stylus" scoped>
+
 .detail
-  .banner
-    .slide
+  .header 
+    position fixed
+    top 0
+    left 0
+    right 0
+    height 100px
+    z-index 100
+    .title
+      height 50px
+      position relative
+      background #202020
+      color #fff
       text-align center
-      img 
-        width 100%
-        height 100%
+      line-height 50px
+      .back
+        position absolute
+        display inline-block
+        border 1px solid #000
+        height 28px
+        left 10px
+        font-size 12px
+        line-height 28px
+        top 50%
+        transform translateY(-50%)
+        padding 1px 5px
+        border-radius 5px 
+        background linear-gradient(#2a2a2a,#151515)
+        box-shadow inset 0 1px 1px hsla(0,0%,100%,.1), inset 0 0 1px rgba(0,0,0,.5)
+        i 
+          font-size 12px
+          line-height 30px
+
+      h3 
+        display inline-block
+    .switch
+      height 35px
+      padding 10px 10px 
+      background #F2F2F2
+      box-shadow 0 5px 13px rgba(0,0,0,.12)
+      .box-border 
+        border 1px solid #d5d5d5
+        display flex
+        text-align center
+        border-radius 5px
+        height 35px
+        .box-line 
+          display inline-block
+          padding 7px 0
+          flex 1
+          // border-left 1px solid #d5d5d5
+          color #606060
+          font-weight 700
+  .good
+    .banner
+      margin-top 100px
+      height 80vw
+      border-bottom 6px solid #E3E3E3
+      .slide
+        text-align center
+        img 
+          height 100%
+    .title-content
+      padding 18px 20px
+      border-bottom 6px solid #E3E3E3
+      h4 
+        font-size 17px
+        color #333
+        margin-bottom 9px
+      p 
+        margin-bottom 9px
+        color #7f7f7f
+        font-size 14px
+      .title-price
+        font-size 17px
+    .item-box
+      display flex
+      border-bottom 6px solid #E3E3E3
+      .left 
+        flex 12
+        padding 18px 0 13px 18px
+        h6 
+          color #999
+          font-size 14px
+          padding-bottom 7px
+        p 
+          padding-bottom 7px
+          font-size 15px
+          .value 
+            font-weight 700
+      .right 
+        flex 1
+        text-align center
+        position relative
+        i 
+          display block
+          height 20px
+          position absolute
+          top 50%
+          margin-top -10px  
+          color #999
+    .item-detail
+      .item-title
+        height 40px
+        h2
+          font-size 17px
+          margin-left 20px
+          color #666
+          font-weight 600
+          line-height 40px
+      .item-img 
+        img 
+          background-size contain
+          width 100%
+          border-bottom 6px solid #E3E3E3        
+    .item-specs 
+      border-bottom 6px solid #E3E3E3        
+      .item-title
+        height 40px
+        position relative
+        h2
+          font-size 17px
+          margin-left 20px
+          color #666
+          font-weight 600
+          line-height 40px
+        &:after 
+          content ''
+          width 100% 
+          position absolute
+          height 1px
+          left 0
+          right 0
+          bottom 0
+          background #ededed
+          transform scaleY(.667)
+          transform-origin 0 100%
+      .specs 
+        padding 22px 22px 46px
+        .specs-item 
+          padding 20px 22px
+          display block
+          font-size 11px
+          &:nth-child(odd) 
+            background #fafafa
+          h4 
+            display inline-block
+            color #333
+            font-weight 700
+            flex-wrap nowrap
+            flex-shrink 0
+          span 
+            display inline-block
+            float right
+            color #7f7f7f
+    .item-server
+      border-bottom 6px solid #E3E3E3        
+      .item-title
+        height 40px
+        position relative
+        h2
+          font-size 17px
+          margin-left 20px
+          color #666
+          font-weight 600
+          line-height 40px
+        &:after 
+          content ''
+          width 100% 
+          position absolute
+          height 1px
+          left 0
+          right 0
+          bottom 0
+          background #ededed
+          transform scaleY(.667)
+          transform-origin 0 100%
+    .recommend
+      position relative
+      margin-bottom 50px
+      .item-title
+        height 40px
+        position relative
+        h2
+          font-size 17px
+          margin-left 20px
+          color #666
+          font-weight 600
+          line-height 40px
+      .box 
+        display flex
+        flex-wrap wrap 
+        .item 
+          display inline-block
+          width 50%
+          text-align center
+  .footer 
+    position fixed 
+    height 66px
+    bottom 0
+    left 0
+    right 0
+    background #fff
+    ul 
+      display flex
+      height 66px
+      line-height 66px
+      text-align center
+      li 
+        display inline-block
+      .cart 
+        flex 1
+        i 
+          font-size 35px
+          color #d3d3d3
+      .add-cart 
+        flex 3 
+        button 
+          display inline-block
+          box-sizing border-box
+          width 90%
+          height 70%
+          background #fff
+          border-radius 5px
+          border 1px solid #ccc
+          color #929292
+          font-size 17px
+          font-weight 700
+      .buy 
+        flex 3
+        button 
+          display inline-block
+          width 90%
+          height 70%
+          border-radius 5px
+          border 1px solid #ccc
+          background linear-gradient(#6e98f4,#4b77ee)
+          font-size 17px
+          font-weight 700
+          color #fff
+      
+    
+
+.detail >>>.swiper-pagination-bullet 
+  width 6px
+  height 6px
+  background-color #EAEAEA
+  opacity 1
+.detail >>>.swiper-pagination-bullet-active
+  width 6px
+  height 6px
+  opacity 1
+  background-color #fff
+  box-shadow 0 1px 3px rgba(0,0,0,.15)
 </style>
