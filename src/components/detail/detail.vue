@@ -1,113 +1,149 @@
 <template>
-  <div class="detail">
-    <div class="header">
-      <div class="title">
-        <span class="back" @click="goBack">
-          <i class="iconfont icon-zuo"></i>
-          返回
-          </span>
-        <h3>{{dataList.shop_info.title}}</h3>
-      </div>
-      <div class="switch">
-        <ul class="box-border">
-          <li class="box-line" style="border-right:1px solid #d5d5d5;">商品</li>
-          <li class="box-line" style="border-right:1px solid #d5d5d5;">详情</li>
-          <li class="box-line" style="border-right:1px solid #d5d5d5;">参数</li>
-          <li class="box-line">推荐</li>
-        </ul>
-      </div>
-    </div>
-    <div class="good">
-      <swiper class="banner" :options="swiperOption" ref="mySwiper">
-      <!-- slides -->
-        <swiper-slide class="slide slide1" v-for="(item,index) in bannerImg" :key="index">
-          <img :src="item" alt="">
-        </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
-      <div class="title-content">
-        <h4>{{dataList.spu.sku_info[0].title}}</h4>
-        <p>{{dataList.spu.sku_info[0].sub_title}}</p>
-        <i-price class="title-price" :price="Number(dataList.spu.sku_info[0].price)"></i-price>
-      </div>
-      <div class="item-box">
-        <div class="left">
-          <h6>已选版本</h6>
-          <p>
-            <span class="name">颜色：</span>
-            <span class="value">藏蓝色</span>
-          </p>
-          <p>
-            <span class="name">尺码：</span>
-            <span class="value">37</span>
-          </p>
-          <p>
-            <span class="name">数量：</span>
-            <span class="value">1</span>
-          </p>
+  <div>
+    <div class="detail">
+      <div class="header">
+        <div class="title">
+          <span class="back" @click="goBack">
+            <i class="iconfont icon-zuo"></i>
+            返回
+            </span>
+          <h3>{{headerTitle}}</h3>
         </div>
-        <div class="right">
-          <i class="iconfont icon-tubiaozhizuo-"></i>
+        <div class="switch">
+          <ul class="box-border">
+            <li class="box-line" @click="moveTo(1,$event)" :class="{'active':currentIndex === 1}" style="border-right:1px solid #d5d5d5;">
+            商品</li>
+            <li class="box-line" @click="moveTo(2,$event)" :class="{'active':currentIndex === 2}"  style="border-right:1px solid #d5d5d5;">
+            详情</li>
+            <li class="box-line" @click="moveTo(3,$event)" :class="{'active':currentIndex === 3}"  style="border-right:1px solid #d5d5d5;">
+            参数</li>
+            <li class="box-line" @click="moveTo(4,$event)" :class="{'active':currentIndex === 4}" >
+            推荐</li>
+          </ul>
         </div>
       </div>
-      <div class="item-detail">
-        <div class="item-title">
-          <h2>商品详情</h2>
+      <div class="good">
+        <div class="shangping" ref="shangping">
+          <swiper class="banner" :options="swiperOption" ref="mySwiper">
+          <!-- slides -->
+            <swiper-slide class="slide slide1" v-for="(item,index) in bannerImg" :key="index">
+              <img :src="item" alt="">
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+          <div class="title-content">
+            <h4>{{headerTitle}}</h4>
+            <p>{{subTitle}}</p>
+            <i-price class="title-price" :price="Number(price)"></i-price>
+          </div>
+          <div class="item-box" @click="select">
+            <div class="left">
+              <h6>已选版本</h6>
+              <p>
+                <span class="name">颜色：</span>
+                <span class="value">藏蓝色</span>
+              </p>
+              <p>
+                <span class="name">尺码：</span>
+                <span class="value">37</span>
+              </p>
+              <p>
+                <span class="name">数量：</span>
+                <span class="value">1</span>
+              </p>
+            </div>
+            <div class="right">
+              <i class="iconfont icon-tubiaozhizuo-"></i>
+            </div>
+          </div>
         </div>
-        <div class="item-img">
-          <img :src=longImg alt="">
+        <div class="item-detail" ref="detail">
+          <div class="item-title">
+            <h2>商品详情</h2>
+          </div>
+          <div class="item-img">
+            <img :src=longImg alt="">
+          </div>
         </div>
-      </div>
-      <div class="item-specs">
-        <div class="item-title">
-          <h2>技术参数</h2>
+        <div class="canshu" ref="canshu">
+          <div class="item-specs">
+            <div class="item-title">
+              <h2>技术参数</h2>
+            </div>
+            <div class="specs">
+              <ul>
+                <li class="specs-item" v-for="(iitem,index) in specsData" :key="index">
+                  <h4>{{iitem.name}}</h4>
+                  <span>{{iitem.value}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="item-server">
+            <div class="item-title">
+              <h2>服务说明</h2>
+            </div>
+            <div class="con">
+              lasdjf
+            </div>
+          </div>  
         </div>
-        <div class="specs">
-          <ul>
-            <li class="specs-item" v-for="(iitem,index) in specsData" :key="index">
-              <h4>{{iitem.name}}</h4>
-              <span>{{iitem.value}}</span>
+        <div class="recommend" ref="recommend">
+          <div class="item-title">
+            <h2>相关推荐</h2>
+          </div>
+          <ul class="box">
+            <li class="item" v-for="(item,index) in recommentData" :key="index">
+              <i-goodblock :iitem=item :typee="large"></i-goodblock>
             </li>
           </ul>
         </div>
       </div>
-      <div class="item-server">
-        <div class="item-title">
-          <h2>服务说明</h2>
-        </div>
-        <div class="con">
-          lasdjf
-        </div>
-      </div>  
-      <div class="recommend">
-        <div class="item-title">
-          <h2>相关推荐</h2>
-        </div>
-        <ul class="box">
-          <li class="item" v-for="(item,index) in recommentData" :key="index">
-            <i-goodblock :iitem=item :typee="large"></i-goodblock>
+      <div class="footer">
+        <ul>
+          <li class="cart">
+            <i class="iconfont icon-gouwu1"></i>          
+          </li>
+          <li class="add-cart">
+            <button class="addCart">加入购物车</button>
+          </li>
+          <li class="buy">
+            <button class="buyNow">现在购买</button>
           </li>
         </ul>
       </div>
+      
     </div>
-    <div class="footer">
-      <ul>
-        <li class="cart">
-          <i class="iconfont icon-gouwu1"></i>          
-        </li>
-        <li class="add-cart">
-          <button class="addCart">加入购物车</button>
-        </li>
-        <li class="buy">
-          <button class="buyNow">现在购买</button>
-        </li>
-      </ul>
-    </div>
-    
+    <transition name="fade">
+      <div class="mark-bg" v-show="show" @click="select">
+        <div class="select" >
+          <div class="mask" @click.prevent="select">
+            <div class="mark-head">
+              <div class="mark-img">
+                <img :src=dataList.spu.sku_info[0].ali_image alt="">
+              </div>
+              <div class="mark-title">
+                <h4>{{dataList.spu.sku_info[0].title}}</h4>
+                <p>
+                  <span>{{dataList.spu.sku_info[0].spec_json[0].show_name}}</span>
+                  <span>{{dataList.spu.sku_info[0].spec_json[1].show_name}}</span>
+                  <span>{{dataList.spu.sku_info[0].spec_json[2].show_name}}</span>
+                </p>
+                <i-price class="mark-price" :price=dataList.spu.sku_info[0].price ></i-price>
+              </div>
+            </div>
+            <div class="mark-content" ref="markContent">
+              lkjldsh
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 import api from '../../api/index'
 import Price from '@/components/price/price'
 import goodBlock from '../goodBlock/goodblock'
@@ -117,7 +153,7 @@ export default {
     return {
       id:this.$route.params.id,
       large:'large',
-      dataList:null,
+      dataList:{},
       swiperOption: {
         pagination: {
           el: ".swiper-pagination",
@@ -129,12 +165,63 @@ export default {
         spaceBetween : 20,
         centeredSlides:true,
       },
-      recommentData:null
+      recommentData:null,
+      headerTitle:'',
+      specsData:null,
+      bannerImg:null,
+      longImg:null,
+      subTitle:null,
+      price:null,
+      scroll:0,
+      heightList:[],
+      show:false,
     }
   },
   methods:{
+
     goBack(){
       this.$router.go(-1);//返回上一层
+    },
+    select(){
+      if(this.show){
+        this.show = false;
+        this.canScroll()
+      }else{
+        this.show = true;
+        this.noScroll()
+      }
+    },
+    moveTo(index,event){
+      console.log(index,event)
+      if(index === 1){
+        window.scrollTo({"behavior": "smooth", "top": this.$refs.shangping.offsetTop-104})
+      }else if(index === 2){
+        window.scrollTo({"behavior": "smooth", "top": this.$refs.detail.offsetTop-104})
+      }else if(index === 3){
+        window.scrollTo({"behavior": "smooth", "top": this.$refs.canshu.offsetTop-104})
+      }else if(index === 4){
+        window.scrollTo({"behavior": "smooth", "top": this.$refs.recommend.offsetTop-104})
+      }
+    },
+    _initScroll(){
+      let that = this
+      window.onscroll = function() {
+        //为了保证兼容性，这里取两个值，哪个有值取哪一个
+        //scrollTop就是触发滚轮事件时滚轮的高度
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        // console.log(scrollTop)
+        that.scroll = scrollTop+10;
+        // console.log(that.$refs.shangping.clientHeight)
+      }
+      that.heightList.push(that.$refs.shangping.clientHeight,
+        that.$refs.detail.clientHeight,
+        that.$refs.canshu.clientHeight,
+        that.$refs.recommend.clientHeight
+      )
+      this.contentScroll = new BScroll(this.$refs.markContent,{
+        click:true
+      })
+      // console.log(this.heightList)
     }
   },
   components:{
@@ -143,39 +230,52 @@ export default {
 
   },
   computed:{
-    specsData(){
-      return this.dataList.shop_info.tpl_content.base.attributes[0].list
-    },
-    bannerImg(){
-      return this.dataList.shop_info.ali_images
-    },
-    longImg(){
-      return this.dataList.shop_info.tpl_content.base.images.ali_mobile.url[0]
-    },
-    bigTitle(){
-      return 
+    currentIndex(){
+      if(this.scroll >= 0 && this.scroll<this.heightList[0]){
+        return 1
+      }
+      if(this.scroll >= this.heightList[0] && this.scroll < this.heightList[1]+this.heightList[0]){
+        return 2
+      }
+      if(this.scroll >= this.heightList[1] && this.scroll < this.heightList[1]+this.heightList[0]+this.heightList[2]){
+        return 3
+      }
+      if(this.scroll > this.heightList[2]){
+        return 4
+      }
+      // return 2
     }
   },
   created() {
     console.log(this.id)
     api.getDetail(this.id).then((res) => {
-      this.dataList = res.data[0]
+      this.dataList = res.data[0];
+      this.headerTitle = res.data[0].spu.name;
+      this.specsData = res.data[0].shop_info.tpl_content.base.attributes[0].list;
+      this.bannerImg = res.data[0].shop_info.ali_images;
+      this.longImg = res.data[0].shop_info.tpl_content.base.images.ali_mobile.url[0];
+      this.subTitle = res.data[0].shop_info.sku_mobile_sub_title;
+      this.price = res.data[0].spu.sku_info[0].price
       console.log(this.dataList)
-    })
-    api.getRecomment().then((res) => {
-      let reco = res.data.map((item) => {
-        if(item.sale_status === 3){
-          return item
-        }
+    }).then(()=> {    
+      api.getRecomment().then((res) => {
+        let reco = res.data.map((item) => {
+          if(item.sale_status === 3){
+            return item
+          }
+        })
+        let reco2 = []
+        reco.forEach(item => {
+          if(item){
+            reco2.push(item)
+          }
+        });
+        console.log(reco2)
+        this.recommentData = reco2
       })
-      let reco2 = []
-      reco.forEach(item => {
-        if(item){
-          reco2.push(item)
-        }
-      });
-      console.log(reco2)
-      this.recommentData = reco2
+    })
+    this.$nextTick(()=> {
+      this._initScroll()
     })
   },
 }
@@ -183,7 +283,9 @@ export default {
 
 <style lang="stylus" scoped>
 
+
 .detail
+  // position fixed
   .header 
     position fixed
     top 0
@@ -233,9 +335,13 @@ export default {
           display inline-block
           padding 7px 0
           flex 1
-          // border-left 1px solid #d5d5d5
           color #606060
           font-weight 700
+          &.active 
+            background #bfbfbf
+            color #fff
+            box-shadow inset 0 1px 3px rgba(0,0,0,.15)
+            background-image linear-gradient(#aeaeae,#b3b3b3)
   .good
     .banner
       margin-top 100px
@@ -423,9 +529,70 @@ export default {
           font-size 17px
           font-weight 700
           color #fff
-      
+.mark-bg 
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  margin-bottom 66px
+  background rgba(0,0,0,.8)
+  z-index 1000
+  .select  
+    position absolute
+    bottom 0
+    left 0
+    right 0
+    top 40%
+    // flex-direction column
+    .mark-head 
+      position fixed
+      display flex
+      top 40%
+      left 0
+      right 0
+      bottom 45%
+      background #f7f7f7
+      background-image linear-gradient(#fefefe,#f6f6f6)
+      box-shadow 0 5px 13px rgba(0,0,0,.12)
+      .mark-img 
+        position relative
+        display inline-block
+        width 98px
+        height 98px
+        top -28px
+        margin 14px
+        padding 11px
+        background-color #fff
+        border-radius 5px
+        flex-shrink 0
+        img 
+          width 100%
+          height 100%   
+      .mark-title 
+        display inline-block
+        margin 18px 13px 18px 4px
+        color #333
+        font-size 17px
+        flex-grow 1
+        h4 
+          margin-bottom 7px
+        p  
+          font-size 14px
+          color #7f7f7f
+          margin-bottom 13px
+          span  
+            margin-right 4px
+        .mark-price 
+          font-size 18px
+    .mark-content 
+      position absolute
+      top 33%
+      bottom 0
+      left 0
+      right 0
+      background-color #fff
     
-
 .detail >>>.swiper-pagination-bullet 
   width 6px
   height 6px
